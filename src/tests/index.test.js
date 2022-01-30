@@ -1,7 +1,5 @@
-import { showHealthStatus } from "../js/index.js";
-import { sortHealthStatus } from "../js/index.js";
-import fetchData from "../js/http.js";
-import { getLevel } from "../js/index.js";
+import { showHealthStatus, sortHealthStatus, getLevel } from "../js/index";
+import fetchData from "../js/http";
 
 jest.mock("../js/http");
 
@@ -10,7 +8,6 @@ beforeEach(() => {
 });
 
 describe("Game functions: ", () => {
-
   test("showHealthStatus should return correct status", () => {
     expect(showHealthStatus({ name: "гладиатор", health: 25 })).toEqual(
       "wounded"
@@ -40,28 +37,17 @@ describe("Game functions: ", () => {
       { name: "бард", health: 15 },
     ]);
   });
-
 });
 
-describe('Functions for mocking: ', () => {
+describe("Functions for mocking: ", () => {
+  test("fetchData should be called with correct url", () => {
+    fetchData.mockReturnValue(JSON.stringify({}));
+    getLevel(1);
+    expect(fetchData).toBeCalledWith("https://server/user/1");
+  });
 
-    test("fetchData should be called with correct url", () => {
-        fetchData.mockReturnValue(JSON.stringify({}));
-        getLevel(1);
-        expect(fetchData).toBeCalledWith("https://server/user/1");
-      });
-      
-      test("getLevel should return correct response", () => {
-        fetchData.mockReturnValue({ status: "ok", level: 100 });
-        expect(getLevel(1)).toEqual("Ваш текущий уровень: 100");
-      });
-      
-      test("fetchData should throw error", () => {
-        expect(() => {
-          fetchData("url");
-        }).toThrow("Mock this!");
-      });
-      
-})
-
-
+  test("getLevel should return correct response", () => {
+    fetchData.mockReturnValue({ status: "ok", level: 100 });
+    expect(getLevel(1)).toEqual("Ваш текущий уровень: 100");
+  });
+});
