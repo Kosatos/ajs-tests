@@ -1,9 +1,7 @@
-import fetchData from "../js/http";
+import fetchData from '../js/http';
 
-test("fetchData should throw error", () => {
+test('fetchData should throw error', () => {
   expect(() => {
-    fetchData("url");
-  }).toThrow("Mock this!");
+    fetchData('url');
+  }).toThrow('Mock this!');
 });
-
-
